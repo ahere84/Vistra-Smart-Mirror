@@ -1,19 +1,15 @@
 import os
-import pandas as pd #open-source Python library that provides high-performance, easy-to-use data structures, and data analysis tools.
+import pandas as pd
 from torch.utils.data import Dataset
 from torchvision.io import read_image
 
-class EyeMovementDataset(Dataset):
-    
-    
+from SettingsManager import SettingsManager 
 
-    def __init__(self, annotations_file, img_dir, transform=None):
-        annotations_file = os.path.expanduser('~/Documents/python projects/SmartMirror/data/labels.csv')
-        img_dir = os.path.expanduser('~/Documents/python projects/SmartMirror/data/images')
-        
-        self.img_labels = pd.read_csv(annotations_file) # Load the CSV as a DataFrame
-        self.img_dir = img_dir                          # Store the image directory path
-        self.transform = transform                      # Transformation to be applied to each image
+class EyeMovementDataset(Dataset):
+    def __init__(self, transform=None): 
+        self.img_labels = pd.read_csv(SettingsManager.get_path('annotations_file'))
+        self.img_dir = SettingsManager.get_path('img_dir')
+        self.transform = transform                      
 
     def __len__(self):
         return len(self.img_labels) # Return the number of items in the dataset
@@ -25,7 +21,7 @@ class EyeMovementDataset(Dataset):
         
         # Retrieve the label from the DataFrame
         label = self.img_labels.iloc[idx, 1]
-         
+        
         # Apply the specified transformations to the image
         if self.transform:
             image = self.transform(image)
