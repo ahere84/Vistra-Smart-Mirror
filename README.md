@@ -13,8 +13,7 @@ The Vistra Smart Mirror software has been developed and tested on Ubuntu 22.04. 
 
 **Clone the repository:**
 ```bash
-git clone https://github.com/yourgithub/Vistra-Smart-Mirror.git
-cd Vistra-Smart-Mirror
+git clone https://github.com/yourgithub/Vistra-Smart-Mirror
 ```
 
 ## Contributing
