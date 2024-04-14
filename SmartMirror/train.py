@@ -1,4 +1,3 @@
-import os
 import torch
 from torch.optim import Adam
 import torch.nn as nn
@@ -14,9 +13,7 @@ def train_model(num_epochs=10):
         ToTensor(),
         Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
-    dataset = EyeMovementDataset(annotations_file= os.path.expanduser'~/Documents/python projects/SmartMirror/data/labels.csv', 
-                                 img_dir= os.path.expanduser'~/Documents/python projects/SmartMirror/data/images', 
-                                 transform=transform)
+    dataset = EyeMovementDataset(transform=transform)
     
     train_loader = DataLoader(dataset, batch_size=64, shuffle=True)
 
