@@ -1,0 +1,10 @@
+
+{
+    
+    "image_path": {
+        "top_left": "icons/circle.png",
+        "top_right": "icons/square.png",
+        "bottom_left": "icons/triangle.png",
+        "bottom_right": "icons/x.png"
+    }
+}
