@@ -11,7 +11,7 @@ def create_window():
     root.title('Vistra Mirror UI')
     root.geometry('1080x1920')
     root.config(bg= 'black')
-    root.overrideredirect(True) #removing this will disable tab functions
+    #root.overrideredirect(True) #removing this will disable tab functions
     
     SettingsManager.load_config(SettingsManager.configPath)  # Ensure this is the correct path to your config file
 
@@ -64,7 +64,7 @@ def create_window():
     # Clock
     clock_label = tk.Label(root, font=('Helvetica', 35), bg='black', fg='white')
     ampm_label = tk.Label(root, font=('Helvetica', 20), bg='black', fg='white')  # Smaller font size for AM/PM
-    ampm_label.place(x=560, y=23)
+    ampm_label.place(x=582, y=23)
     clock_label.place(x=460, y=20)  # Positioning the clock at the center; adjust as needed
     update_time(clock_label, ampm_label)
     
