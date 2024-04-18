@@ -13,7 +13,6 @@ def on_message(ws, message):
         
         # Further processing can be done here
         # For example, storing data in a database, or updating a live graph
-
     except json.JSONDecodeError:
         print("Error decoding JSON")
 
@@ -25,7 +24,7 @@ def on_close(ws, status_code, message):
 
 def on_open(ws):
     def run(*args):
-        app_key = "AppKeyTrial"  # Ensure to replace with your actual app key
+        app_key = "AppKeyTrial" #registered key
         ws.send(app_key)
         print("AppKey sent to server:", app_key)
     threading.Thread(target=run).start()
