@@ -2,7 +2,6 @@ from pathlib import Path
 import tkinter as tk 
 import pyautogui
 import time
-from logging import root
 from PIL import Image, ImageTk
 from SettingsManager import SettingsManager
 from queue import Queue
