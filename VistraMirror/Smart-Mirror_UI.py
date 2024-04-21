@@ -2,7 +2,9 @@ from pathlib import Path
 import tkinter as tk 
 import pyautogui
 import time
+import requests
 from PIL import Image, ImageTk
+from tkinter import font as tkFont  # This allows for font customization
 from SettingsManager import SettingsManager
 from queue import Queue
 from threading import Thread, Timer
@@ -15,17 +17,17 @@ event_manager = EventManager()
 def setup_ui():
     global root
     root.title('Vistra Mirror UI')
-    root.geometry('1080x1920')
+    root.geometry('1080x1920') 
     root.config(bg= 'black')
     
-    #root.overrideredirect(True) #removing this will disable tab functions
+    root.overrideredirect(True) #removing this will disable tab functions
     
     event_manager.register_event('GazeMove', lambda event: handle_gaze_move(root, event))
     SettingsManager.load_config(SettingsManager.configPath)  # Ensure this is the correct path to your config file
 
    
     image_positions = {
-        'top_left': (50, 5),
+        'weather': (50, 5),
         'top_right': (850, 5),
         'back': (90, 1780) #centered x
         #'bottom_left': (50, 1620),
@@ -45,14 +47,14 @@ def setup_ui():
             if key != 'back': 
                 img = img.resize((100, 100), Image.Resampling.LANCZOS) #rescale top icons to match resize
             
-            if key == 'top_left': top_left_img = ImageTk.PhotoImage(img)
+            if key == 'weather': weather = ImageTk.PhotoImage(img)
             if key == 'top_right': top_right_img = ImageTk.PhotoImage(img)
             if key == 'back': back_img = ImageTk.PhotoImage(img) #stores back button, should do the same for the rest maybe a switch
             
             photo = ImageTk.PhotoImage(img)
 
             images[key] = photo
-            label = tk.Label(root, image=photo, bg= 'black')
+            label  = tk.Label(root, image=photo, bg= 'black')
             label.place(x=x, y=y)
             labels[key] = label    
         except Exception as e:
@@ -62,8 +64,9 @@ def setup_ui():
     def back_app():
         print("Back functionality not implemented yet")
     
-    def top_left_app():
-        print("left app functionality not implemented yet")
+    def weather_app():
+        api_key = "1f93270a830c9e2836aba25946c815ab"
+        display_weather(api_key)
         
     def top_right_app():
         print("right app functionality not implemented yet")
@@ -80,9 +83,9 @@ def setup_ui():
     back_button.image = back_img  # Keep a reference!
     back_button.place(x=0, y=1742, width=1080, height=200)
     
-    top_left_button = tk.Button(root, image=top_left_img, command=top_left_app, bg='black', bd=0, highlightthickness=0)
-    top_left_button.image = top_left_img  
-    top_left_button.place(x=0, y=5, width= 300, height=200)
+    weather_button = tk.Button(root, image=weather, command=weather_app, bg='black', bd=0, highlightthickness=0)
+    weather_button.image = weather 
+    weather_button.place(x=0, y=5, width= 300, height=200)
     
     top_right_button = tk.Button(root, image=top_right_img, command=top_right_app, bg='black', bd=0, highlightthickness=0)
     top_right_button.image = top_right_img
@@ -91,7 +94,7 @@ def setup_ui():
 
     button_coords = {
         'back_button': (0, 1742, 1080, 1942),
-        'top_left_button': (0, 5, 300, 205),
+        'weather_button': (0, 5, 300, 205),
         'top_right_button': (780, 5, 1080, 205)
     }
     active_timers = {}
@@ -163,6 +166,34 @@ def ui_thread(root):
     while True:
         # Update UI based on received messages
         pass
+
+#Weather App functionality
+def get_weather_data(api_key, location):
+    url = f"https://api.openweathermap.org/data/3.0/onecall?lat={38.989697}&lon={-76.937759}&appid={api_key}"
+    response = requests.get(url)
+    print("API Response:", response.text)  # This will show you the raw response text
+    return response.json()
+
+def display_weather(api_key):
+    location = "College Park, MD"  # Static or dynamically input
+    weather_data = get_weather_data(api_key, location)
+    
+    # Create a new window
+    weather_window = tk.Toplevel()
+    weather_window.title('Weather Information')
+    
+    
+    # Extract and display weather information via API call
+    if weather_data:
+        temp = weather_data['main']['temp']
+        description = weather_data['weather'][0]['description']
+        weather_info = f"Temperature: {temp}°C\nDescription: {description}"
+        
+        label = tk.Label(weather_window, text=weather_info, font=('Helvetica', 16))
+        label.pack(pady=20)
+    else:
+        label = tk.Label(weather_window, text="Failed to get weather data", font=('Helvetica', 16))
+        label.pack(pady=20)
     
 if __name__ == '__main__': 
     root = setup_ui()  # Your function to create and set up the Tkinter UI.
