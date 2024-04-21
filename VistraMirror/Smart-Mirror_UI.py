@@ -1,3 +1,5 @@
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 from pathlib import Path
 import tkinter as tk 
 import pyautogui
@@ -59,8 +61,8 @@ def setup_ui():
             labels[key] = label    
         except Exception as e:
             print(f"Error processing {key}: {e}")
-             # Define back button functionality
-    
+   
+    # Define back button functionality
     def back_app():
         print("Back functionality not implemented yet")
     
@@ -68,7 +70,7 @@ def setup_ui():
         display_weather()
         
     def top_right_app():
-        print("right app functionality not implemented yet")
+        spotify_window()
         
     # Clock
     clock_label = tk.Label(root, font=('Helvetica', 35), bg='black', fg='white')
@@ -96,6 +98,8 @@ def setup_ui():
         'weather_button': (0, 5, 300, 205),
         'top_right_button': (780, 5, 1080, 205)
     }
+
+
     active_timers = {}
 
     def handle_gaze_move(root, event):
@@ -135,10 +139,21 @@ def setup_ui():
 
         
     root.mainloop()
+
+def spotify_window():
+    sp_window = tk.Toplevel()
+    sp_window.title("Spotify Player")
+    sp_window.geometry("500x500")
     
+     # spotify function         
+    def play_music(sp):
+        playlist_uri = 'spotify:playlist:your_playlist_uri'
+        sp.start_playback(context_uri=playlist_uri) 
+     
 def run_client():
     
     pass    
+
 
 def center_image(image, window_width, window_height): #handy method 
     image_width, image_height = image.width(), image.height()
