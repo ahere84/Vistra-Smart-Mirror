@@ -2,8 +2,9 @@
 {
     
     "image_path": {
-        "top_left": "icons/circle.png",
+        "weather": "icons/circle.png",
         "top_right": "icons/square.png",
-        "back": "icons/back.png"
+        "back": "icons/back.png",
+        "weather_display": "icons/weather_img"
     }
 }
