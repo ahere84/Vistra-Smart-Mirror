@@ -65,8 +65,7 @@ def setup_ui():
         print("Back functionality not implemented yet")
     
     def weather_app():
-        api_key = "1f93270a830c9e2836aba25946c815ab"
-        display_weather(api_key)
+        display_weather()
         
     def top_right_app():
         print("right app functionality not implemented yet")
@@ -168,32 +167,19 @@ def ui_thread(root):
         pass
 
 #Weather App functionality
-def get_weather_data(api_key, location):
-    url = f"https://api.openweathermap.org/data/3.0/onecall?lat={38.989697}&lon={-76.937759}&appid={api_key}"
-    response = requests.get(url)
-    print("API Response:", response.text)  # This will show you the raw response text
-    return response.json()
-
-def display_weather(api_key):
-    location = "College Park, MD"  # Static or dynamically input
-    weather_data = get_weather_data(api_key, location)
-    
-    # Create a new window
+def display_weather():
+   # Create a new window
     weather_window = tk.Toplevel()
     weather_window.title('Weather Information')
-    
-    
-    # Extract and display weather information via API call
-    if weather_data:
-        temp = weather_data['main']['temp']
-        description = weather_data['weather'][0]['description']
-        weather_info = f"Temperature: {temp}°C\nDescription: {description}"
-        
-        label = tk.Label(weather_window, text=weather_info, font=('Helvetica', 16))
-        label.pack(pady=20)
-    else:
-        label = tk.Label(weather_window, text="Failed to get weather data", font=('Helvetica', 16))
-        label.pack(pady=20)
+    weather_window.geometry('629x244')
+    weather_window.config(bg="gray")
+
+    pil_image = Image.open(Path("C:/Users/ander/OneDrive/Desktop/Vistra-Smart-Mirror/VistraMirror/icons/weather_img.png")) #may change path later
+    image = ImageTk.PhotoImage(pil_image)
+
+    label = tk.Label(weather_window, image=image)
+    label.image = image
+    label.pack()
     
 if __name__ == '__main__': 
     root = setup_ui()  # Your function to create and set up the Tkinter UI.
