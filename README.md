@@ -2,6 +2,8 @@
 ![Vistra_Logo](https://github.com/ahere84/Vistra-Smart-Mirror/assets/140031110/31a4a300-89df-4497-92bd-f3d3bdd7919b)
 Vistra Smart Mirror brings the power to the eyes of the user. With our advanced hands-free technology, anyone can interact with our smart mirror regardless of physical abilities. The smart mirror is equipped to detect subtle head and eye movements, allowing users to select and interact with applications effortlessly.
 
+https://devpost.com/software/vistra-the-mirror-for-everyone
+
 ## Features ##
 1. Operate the smart mirror without physical touch, using only subtle head and eye movements.
 2. Utilizes torchvision library from PyTorch to detect directional gazes such as top left (TL), top right (TR), bottom left (BL), and bottom right (BR).
